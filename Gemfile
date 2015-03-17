@@ -22,6 +22,8 @@ gem 'omniauth-google-oauth2'
 
 gem 'pundit'
 
+gem 'github-markup', require: 'github/markup'
+
 gem 'twitter-bootstrap-rails'
 gem 'bootstrap_forms'
 gem 'bootstrap-datepicker-rails'

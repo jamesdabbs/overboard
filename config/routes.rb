@@ -3,5 +3,5 @@ Rails.application.routes.draw do
 
   resources :courses, only: [:index, :show, :new, :create]
 
-  root 'static#root'
+  root 'courses#index'
 end

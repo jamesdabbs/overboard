@@ -16,6 +16,7 @@ class CoursesController < ApplicationController
     @course = Course.new create_params
     authorize @course
     if @course.save
+      @course.populate!
       redirect_to @course, success: "Course saved!"
     else
       render :new

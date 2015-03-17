@@ -2,3 +2,25 @@ h1
   = @course.topic.title
   ' 
   small #{@course.campus.name} - #{short_date @course.start_on}
+
+table.table
+  thead
+    tr
+      th
+      th
+      th Goals
+      th M
+      th T
+      th W
+      th Tr
+      th Project
+  tbody
+    - @course.weeks.includes(:days).each do |w|
+      tr
+        th= w.number
+        td= w.summary
+        td= w.markdown :goals
+        - Week.lecture_days.each do |name|
+          - d = w.day name
+          td= d.summary
+        td= w.markdown :project
