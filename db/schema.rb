@@ -11,20 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317145323) do
+ActiveRecord::Schema.define(version: 20150317165437) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "campuses", force: :cascade do |t|
-    t.string   "name",       null: false
+    t.string "name", null: false
   end
 
   create_table "courses", force: :cascade do |t|
-    t.integer  "instructor_id"
-    t.integer  "topic_id"
-    t.integer  "campus_id"
-    t.date     "start_on"
+    t.integer "instructor_id", null: false
+    t.integer "topic_id", null: false
+    t.integer "campus_id", null: false
+    t.date    "start_on", null: false
   end
 
   add_index "courses", ["campus_id"], name: "index_courses_on_campus_id", using: :btree
@@ -32,13 +32,14 @@ ActiveRecord::Schema.define(version: 20150317145323) do
   add_index "courses", ["topic_id"], name: "index_courses_on_topic_id", using: :btree
 
   create_table "instructors", force: :cascade do |t|
-    t.integer  "user_id"
-    t.string   "name",             null: false
-    t.integer  "active_course_id"
+    t.integer "user_id"
+    t.string  "name",             null: false
+    t.string  "email",            null: false
+    t.integer "active_course_id"
   end
 
   create_table "topics", force: :cascade do |t|
-    t.string   "title",      null: false
+    t.string "title", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -57,6 +58,7 @@ ActiveRecord::Schema.define(version: 20150317145323) do
     t.string   "google_auth_id"
     t.text     "google_auth_data"
     t.string   "name",                                null: false
+    t.boolean  "admin", default: false, null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

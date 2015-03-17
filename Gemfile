@@ -20,6 +20,12 @@ gem 'activesupport'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
+gem 'pundit'
+
+gem 'twitter-bootstrap-rails'
+gem 'bootstrap_forms'
+gem 'bootstrap-datepicker-rails'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

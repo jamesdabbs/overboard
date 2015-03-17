@@ -20,3 +20,4 @@
 /config/application.yml
 .DS_Store.env
 coverage
+/db/courses.csv

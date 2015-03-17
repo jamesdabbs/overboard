@@ -1,0 +1,14 @@
+table.table.table-striped.table-hover
+  thead
+    tr
+      th Campus
+      th Topic
+      th Session
+      th Instructor
+  tbody
+    - @courses.each do |c|
+      tr
+        td= c.campus.name
+        td= c.topic.title
+        td= link_to short_date(c.start_on), c
+        td= c.instructor.name

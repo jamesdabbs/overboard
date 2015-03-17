@@ -21,10 +21,16 @@ class User < ActiveRecord::Base
 
       u.google_auth_id   = auth.id
       u.google_auth_data = auth.to_h
+    end.tap do |u|
+      Instructor.where(email: u.email, user_id: nil).update_all user_id: u.id
     end
   end
 
   def active_course
     instructor.try :active_course
+  end
+
+  def instructs? course
+    course.instructor.user_id == id
   end
 end

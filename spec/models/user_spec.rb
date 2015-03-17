@@ -21,6 +21,13 @@ describe User do
       expect(user.google_auth_data["extra"]["favorite_movie"]).to eq "Alien"
     end
 
+    it "claims existing instructor roles by email" do
+      instructor = create :instructor, email: auth.info.email
+      user = User.from_omniauth auth
+      instructor.reload
+      expect(instructor.user).to eq user
+    end
+
     it "can lookup from omniauth data" do
       create :user, email: "su@theironyard.com", name: "Su Kim"
 
