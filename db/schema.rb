@@ -11,10 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317131920) do
+ActiveRecord::Schema.define(version: 20150317145323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "campuses", force: :cascade do |t|
+    t.string   "name",       null: false
+  end
+
+  create_table "courses", force: :cascade do |t|
+    t.integer  "instructor_id"
+    t.integer  "topic_id"
+    t.integer  "campus_id"
+    t.date     "start_on"
+  end
+
+  add_index "courses", ["campus_id"], name: "index_courses_on_campus_id", using: :btree
+  add_index "courses", ["instructor_id"], name: "index_courses_on_instructor_id", using: :btree
+  add_index "courses", ["topic_id"], name: "index_courses_on_topic_id", using: :btree
+
+  create_table "instructors", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "name",             null: false
+    t.integer  "active_course_id"
+  end
+
+  create_table "topics", force: :cascade do |t|
+    t.string   "title",      null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -31,9 +56,13 @@ ActiveRecord::Schema.define(version: 20150317131920) do
     t.datetime "updated_at"
     t.string   "google_auth_id"
     t.text     "google_auth_data"
+    t.string   "name",                                null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "courses", "campuses"
+  add_foreign_key "courses", "instructors"
+  add_foreign_key "courses", "topics"
 end

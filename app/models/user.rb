@@ -9,13 +9,22 @@ class User < ActiveRecord::Base
 
   serialize :google_auth_data, JSON
 
+  has_one :instructor
+  has_many :courses
+
   def self.from_omniauth auth
     email = auth.info.email
     raise "You must sign in with a #{DOMAIN} address" unless email.ends_with? DOMAIN
     where(email: email).first_or_create! do |u|
+      u.name     = auth.info.name
       u.password = SecureRandom.hex 64
+
       u.google_auth_id   = auth.id
       u.google_auth_data = auth.to_h
     end
+  end
+
+  def active_course
+    instructor.try :active_course
   end
 end
