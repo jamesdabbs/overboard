@@ -1,21 +1,30 @@
-class Week < ActiveRecord::Base
-  belongs_to :course
-
-  has_many :days
-
-  validates :number, presence: true, inclusion: 1..12
-
+class Week
   def self.lecture_days
     Date::DAYNAMES[1..4]
   end
 
-  def markdown field
-    raw = send field
-    GitHub::Markup.render('README.md', raw).html_safe if raw.present?
+  attr_reader :course, :number
+
+  def initialize course, number
+    @course, @number = course, number
   end
 
   def day name
-    @_days ||= days.map { |d| [d.name, d] }.to_h
-    @_days[name]
+    Day.new self, name
+  end
+  def days
+    Week.lecture_days.map { |name| day name }
+  end
+
+  %w( goals plans summary project ).each do |attr|
+    define_method(   attr   ) {       get attr      }
+    define_method("#{attr}=") { |val| set attr, val }
+  end
+
+  def get *keys
+    course.get :weeks, number, *keys
+  end
+  def set *keys, key, val
+    course.set :weeks, number, *keys, key, val
   end
 end

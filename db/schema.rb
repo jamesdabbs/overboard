@@ -25,22 +25,12 @@ ActiveRecord::Schema.define(version: 20150317222946) do
     t.integer "topic_id",      null: false
     t.integer "campus_id",     null: false
     t.date    "start_on",      null: false
+    t.text    "data"
   end
 
   add_index "courses", ["campus_id"], name: "index_courses_on_campus_id", using: :btree
   add_index "courses", ["instructor_id"], name: "index_courses_on_instructor_id", using: :btree
   add_index "courses", ["topic_id"], name: "index_courses_on_topic_id", using: :btree
-
-  create_table "days", force: :cascade do |t|
-    t.integer  "week_id"
-    t.string   "name"
-    t.string   "summary"
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "days", ["week_id"], name: "index_days_on_week_id", using: :btree
 
   create_table "instructors", force: :cascade do |t|
     t.integer "user_id"
@@ -75,20 +65,7 @@ ActiveRecord::Schema.define(version: 20150317222946) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "weeks", force: :cascade do |t|
-    t.integer "course_id"
-    t.integer "number",    null: false
-    t.string  "summary"
-    t.text    "goals"
-    t.text    "plans"
-    t.text    "project"
-  end
-
-  add_index "weeks", ["course_id"], name: "index_weeks_on_course_id", using: :btree
-
   add_foreign_key "courses", "campuses"
   add_foreign_key "courses", "instructors"
   add_foreign_key "courses", "topics"
-  add_foreign_key "days", "weeks"
-  add_foreign_key "weeks", "courses"
 end

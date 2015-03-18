@@ -12,5 +12,4 @@ CSV.foreach File.expand_path("../courses.csv", __FILE__), headers: true do |cour
     where(campus: campus, instructor: instructor, topic: topic).
     create_with(start_on: course["start"]).
     first_or_create!
-  course.populate!
 end

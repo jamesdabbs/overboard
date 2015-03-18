@@ -23,6 +23,7 @@ gem 'omniauth-google-oauth2'
 gem 'pundit'
 
 gem 'github-markup', require: 'github/markup'
+gem 'redcarpet'
 
 gem 'twitter-bootstrap-rails'
 gem 'bootstrap_forms'
@@ -38,6 +39,7 @@ end
 group :development, :test do
   gem 'rspec-rails'
   gem 'spring'
+  gem 'thor-rails'
 end
 
 group :test do

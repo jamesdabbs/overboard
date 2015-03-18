@@ -3,18 +3,35 @@ class Course < ActiveRecord::Base
   belongs_to :topic
   belongs_to :campus
 
-  has_many :weeks
-
   validates :start_on, presence: true, uniqueness: { scope: [:topic, :campus] }
 
-  def populate!
-    return if weeks.exists?
+  serialize :data, JSON
 
-    1.upto(12) do |n|
-      w = weeks.create! number: n
-      Week.lecture_days.each do |name|
-        w.days.create! name: name
-      end
-    end
+  after_initialize { self.data ||= {} }
+
+  def data
+    super.try :with_indifferent_access
+  end
+
+  def get *keys
+    keys.reduce(data) { |h,k| h[k.to_s] }
+  rescue NoMethodError => e
+    nil
+  end
+
+  def set *keys, key, val
+    d = data
+    keys.reduce(d) do |h,k|
+      h[k.to_s] ||= {}
+      h[k.to_s]
+    end[key.to_s] = val
+    self.data = d
+  end
+
+  def week n
+    Week.new self, Integer(n)
+  end
+  def weeks
+    1.upto(12).map { |n| week n }
   end
 end

@@ -15,12 +15,12 @@ table.table
       th Tr
       th Project
   tbody
-    - @course.weeks.includes(:days).each do |w|
+    - @course.weeks.each do |w|
       tr
-        th= w.number
+        th= link_to w.number, course_week_path(@course, w.number)
         td= w.summary
-        td= w.markdown :goals
+        td= markdown w.goals
         - Week.lecture_days.each do |name|
           - d = w.day name
           td= d.summary
-        td= w.markdown :project
+        td= markdown w.project

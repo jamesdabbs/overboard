@@ -1,0 +1,19 @@
+h1
+  = "Week #{@week.number} "
+  a href=course_path(@course)
+    small #{@course.topic.title} - #{@course.campus.name} - #{short_date @course.start_on}
+
+table.table
+  tr
+    th Goals
+    td= markdown @week.goals
+  tr
+    th Plans
+    td= markdown @week.plans
+  - @week.days.each do |day|
+    tr
+      th #{day.name}
+      td= markdown day.description
+  tr
+    th Project
+    td= markdown @week.project
