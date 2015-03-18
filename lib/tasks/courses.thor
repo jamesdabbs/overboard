@@ -27,7 +27,10 @@ class Courses < Thor
   end
 
   desc 'import', 'import course notes from a folder'
-  def import
-    raise NotImplemented
+  def import path
+    require ::Rails.root.join("lib", "importer")
+    # FIXME: ask for Course
+    full_path = ::Rails.root.join(path)
+    Importer.new(Course.last!, full_path).import!
   end
 end

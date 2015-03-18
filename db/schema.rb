@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150317222946) do
+ActiveRecord::Schema.define(version: 20150318195942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,10 +26,12 @@ ActiveRecord::Schema.define(version: 20150317222946) do
     t.integer "campus_id",     null: false
     t.date    "start_on",      null: false
     t.text    "data"
+    t.integer "timeline_id"
   end
 
   add_index "courses", ["campus_id"], name: "index_courses_on_campus_id", using: :btree
   add_index "courses", ["instructor_id"], name: "index_courses_on_instructor_id", using: :btree
+  add_index "courses", ["timeline_id"], name: "index_courses_on_timeline_id", using: :btree
   add_index "courses", ["topic_id"], name: "index_courses_on_topic_id", using: :btree
 
   create_table "instructors", force: :cascade do |t|
@@ -37,6 +39,13 @@ ActiveRecord::Schema.define(version: 20150317222946) do
     t.string  "name",             null: false
     t.string  "email",            null: false
     t.integer "active_course_id"
+  end
+
+  create_table "timelines", force: :cascade do |t|
+    t.integer "topic_id"
+    t.string  "title"
+    t.text    "description"
+    t.text    "goals"
   end
 
   create_table "topics", force: :cascade do |t|
@@ -67,5 +76,6 @@ ActiveRecord::Schema.define(version: 20150317222946) do
 
   add_foreign_key "courses", "campuses"
   add_foreign_key "courses", "instructors"
+  add_foreign_key "courses", "timelines"
   add_foreign_key "courses", "topics"
 end

@@ -17,10 +17,14 @@ table.table
   tbody
     - @course.weeks.each do |w|
       tr
-        th= link_to w.number, course_week_path(@course, w.number)
-        td= w.summary
+        th= w.number
+        th= link_to w.summary, course_week_path(@course, w.number)
         td= markdown w.goals
         - Week.lecture_days.each do |name|
           - d = w.day name
-          td= d.summary
-        td= markdown w.project
+          td
+            a href=course_week_path(@course, w.number, anchor: name)
+              = d.summary
+        td
+          a href=course_week_path(@course, w.number, anchor: "project")
+            = w.project

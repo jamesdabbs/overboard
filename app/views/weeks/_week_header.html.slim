@@ -1,0 +1,4 @@
+h1
+  = "Week #{@week.number} "
+  a href=course_path(@course)
+    small #{@course.topic.title} - #{@course.campus.name} - #{short_date @course.start_on}

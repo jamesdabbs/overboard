@@ -16,7 +16,15 @@ class Week
     Week.lecture_days.map { |name| day name }
   end
 
-  %w( goals plans summary project ).each do |attr|
+  def summary
+    course.timeline.week(number).summary
+  end
+
+  def goals
+    course.timeline.week(number).goals
+  end
+
+  %w( plans project reflections ).each do |attr|
     define_method(   attr   ) {       get attr      }
     define_method("#{attr}=") { |val| set attr, val }
   end
@@ -24,7 +32,11 @@ class Week
   def get *keys
     course.get :weeks, number, *keys
   end
-  def set *keys, key, val
-    course.set :weeks, number, *keys, key, val
+  def set *keys, val
+    course.set :weeks, number, *keys, val
+  end
+
+  def save!
+    course.save!
   end
 end

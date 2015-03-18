@@ -1,7 +1,8 @@
-h1
-  = "Week #{@week.number} "
-  a href=course_path(@course)
-    small #{@course.topic.title} - #{@course.campus.name} - #{short_date @course.start_on}
+= render partial: 'week_header'
+
+- if policy(@week).edit?
+  a.btn.btn-default href=edit_course_week_path(@course, @week.number)
+    | Edit
 
 table.table
   tr
@@ -12,8 +13,12 @@ table.table
     td= markdown @week.plans
   - @week.days.each do |day|
     tr
-      th #{day.name}
+      th
+        a name=day.name &nbsp;
+        = day.name
       td= markdown day.description
   tr
-    th Project
+    th
+      a name="project" &nbsp;
+      | Project
     td= markdown @week.project

@@ -3,6 +3,8 @@ class Course < ActiveRecord::Base
   belongs_to :topic
   belongs_to :campus
 
+  belongs_to :timeline
+
   validates :start_on, presence: true, uniqueness: { scope: [:topic, :campus] }
 
   serialize :data, JSON

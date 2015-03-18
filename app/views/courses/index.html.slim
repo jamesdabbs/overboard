@@ -12,3 +12,6 @@ table.table.table-striped.table-hover
         td= c.topic.title
         td= link_to short_date(c.start_on), c
         td= c.instructor.name
+
+- if policy(Course).create?
+  = link_to "Add Course", new_course_path, class: "btn btn-default"

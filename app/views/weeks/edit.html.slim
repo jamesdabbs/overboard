@@ -1,0 +1,29 @@
+= render partial: 'week_header'
+
+= form_tag course_week_path(@course, @week.number), method: :patch do
+  table.table
+    tr
+      th Goals
+      td
+        textarea.form-control name="week[goals]"
+          = @week.goals
+    tr
+      th Plans
+      td
+        textarea.form-control name="week[plans]"
+          = @week.plans
+    - @week.days.each do |day|
+      tr
+        th #{day.name}
+        td
+          textarea.form-control name="week[#{day.name}][description]"
+            = day.description
+    tr
+      th Project
+      td
+        textarea.form-control name="week[project]"
+          = @week.project
+    tr
+      th
+      td
+        button.btn.btn-primary Save Changes
