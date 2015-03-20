@@ -33,6 +33,17 @@ class Week
     Project.new self
   end
 
+  def inspect
+    "<Week #{number} - #{summary}>"
+  end
+
+  def journal
+    lines  = days.map { |d| ["# #{d.name} - #{d.summary}", d.description, ""] }.flatten
+    lines << "# Project - #{project.summary}"
+    lines << project.description
+    lines.join "\n"
+  end
+
   def get *keys
     course.get :weeks, number, *keys
   end

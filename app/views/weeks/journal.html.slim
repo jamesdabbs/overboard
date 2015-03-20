@@ -1,0 +1,8 @@
+h1 #{@course.filename} / #{short_date @course.start_on} / ##{@week.number}
+
+.row
+  .col-md-6
+    pre
+      = @week.journal
+  .col-md-6.well
+    = markdown @week.journal

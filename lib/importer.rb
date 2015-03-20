@@ -29,7 +29,7 @@ private
     t.goals = weeks.map do |w|
       lines = w.lines
       _, number, summary = lines.shift.match(/Week (\d+) - (.*)/).to_a
-      { number: Integer(number), summary: summary, goals: lines.join("\n").strip }
+      { number: Integer(number), summary: summary, goals: lines.join.strip }
     end
     t.save!
 
@@ -39,7 +39,7 @@ private
   def split_header text
     return if text.empty?
     lines = text.lines
-    [lines.shift.gsub(/^#*\s*/, ''), lines.join("\n").strip]
+    [lines.shift.gsub(/^#*\s*/, ''), lines.join.strip]
   end
 
   def import_week! n

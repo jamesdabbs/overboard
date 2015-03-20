@@ -6,4 +6,8 @@ class WeekPolicy < ApplicationPolicy
   def update?
     user.instructs? record.course
   end
+
+  def journal?
+    user.instructs? record.course
+  end
 end

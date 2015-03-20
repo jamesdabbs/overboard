@@ -1,5 +1,5 @@
 class WeeksController < ApplicationController
-  before_action :find_week, only: [:show, :edit, :update]
+  before_action :find_week, only: [:show, :edit, :update, :journal]
 
   def show
   end
@@ -15,6 +15,9 @@ class WeeksController < ApplicationController
     end
     @week.save!
     redirect_to course_week_path(@course, @week.number)
+  end
+
+  def journal
   end
 
 private

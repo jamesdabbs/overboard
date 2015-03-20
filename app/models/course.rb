@@ -36,4 +36,9 @@ class Course < ActiveRecord::Base
   def weeks
     1.upto(12).map { |n| week n }
   end
+
+  def filename
+    # FIXME!
+    "dc.rb"
+  end
 end
