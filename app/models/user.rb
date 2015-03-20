@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   DOMAIN = "theironyard.com"
+  class InvalidDomain < StandardError; end
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -15,7 +16,10 @@ class User < ActiveRecord::Base
 
   def self.from_omniauth auth
     email = auth.info.email
-    raise "You must sign in with a #{DOMAIN} address" unless email.ends_with? DOMAIN
+    unless email.ends_with? DOMAIN
+      raise InvalidDomain, "You must sign in with a #{DOMAIN} address"
+    end
+
     where(email: email).first_or_create! do |u|
       u.name     = auth.info.name
       u.password = SecureRandom.hex 64
