@@ -1,8 +1,8 @@
-class Day
-  attr_reader :week, :name
+class Project
+  attr_reader :week, :summary, :description
 
-  def initialize week, name
-    @week, @name = week, name
+  def initialize week
+    @week = week
   end
 
   %w( summary description ).each do |attr|
@@ -10,17 +10,10 @@ class Day
     define_method("#{attr}=") { |val| set attr, val }
   end
 
-  def challenge
-  end
-
-  def assignments
-    []
-  end
-
   def get *keys
-    week.get name, *keys
+    week.get :project, *keys
   end
   def set *keys, val
-    week.set name, *keys, val
+    week.set :project, *keys, val
   end
 end

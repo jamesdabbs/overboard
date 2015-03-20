@@ -25,6 +25,13 @@ table.table
           td
             a href=course_week_path(@course, w.number, anchor: name)
               = d.summary
+              - if d.challenge || d.assignments.any?
+                hr
+                - if d.challenge
+                  = d.challenge
+                - d.assignments.each do |a|
+                  = a
+              / TODO: challenge, assignments
         td
           a href=course_week_path(@course, w.number, anchor: "project")
-            = w.project
+            = w.project.summary

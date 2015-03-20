@@ -47,8 +47,7 @@ private
     w.plans       = read n, "prep"
     w.reflections = read n, "reflections"
 
-    summary, description = split_header(read n, "project")
-    w.project = summary
+    w.project.summary, w.project.description = split_header(read n, "project")
 
     w.days.each do |d|
       d.summary, d.description = split_header(read n, d.name)

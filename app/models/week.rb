@@ -24,9 +24,13 @@ class Week
     course.timeline.week(number).goals
   end
 
-  %w( plans project reflections ).each do |attr|
+  %w( plans reflections ).each do |attr|
     define_method(   attr   ) {       get attr      }
     define_method("#{attr}=") { |val| set attr, val }
+  end
+
+  def project
+    Project.new self
   end
 
   def get *keys

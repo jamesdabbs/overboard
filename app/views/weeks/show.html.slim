@@ -1,9 +1,5 @@
 = render partial: 'week_header'
 
-- if policy(@week).edit?
-  a.btn.btn-default href=edit_course_week_path(@course, @week.number)
-    | Edit
-
 table.table
   tr
     th Goals
@@ -16,9 +12,13 @@ table.table
       th
         a name=day.name &nbsp;
         = day.name
-      td= markdown day.description
+      td
+        strong= day.summary
+        = markdown day.description
   tr
     th
       a name="project" &nbsp;
       | Project
-    td= markdown @week.project
+    td
+      strong= @week.project.summary
+      = markdown @week.project.description

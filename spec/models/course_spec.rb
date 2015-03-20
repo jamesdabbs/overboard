@@ -16,12 +16,12 @@ describe Course do
   end
 
   it "can update weeks" do
-    @course.week(2).summary = "Models"
-    expect(@course.week(2).summary).to eq "Models"
+    @course.week(2).plans = "Models"
+    expect(@course.week(2).plans).to eq "Models"
     @course.save!
 
     @course.reload
-    expect(@course.week(2).summary).to eq "Models"
+    expect(@course.week(2).plans).to eq "Models"
   end
 
   it "can update days" do
@@ -35,5 +35,13 @@ describe Course do
 
   it "fails lookups gracefully" do
     expect(@course.week(4).day("Tuesday").summary).to eq nil
+  end
+
+  it "can set data on projects" do
+    @course.week(3).project.summary = "Gettin' Piggy with It"
+    expect(@course.week(3).project.summary).to eq "Gettin' Piggy with It"
+
+    @course.week(3).project.description = "Gettin' Piggy with It"
+    expect(@course.week(3).project.description).to eq "Gettin' Piggy with It"
   end
 end

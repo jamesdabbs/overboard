@@ -48,3 +48,8 @@ group :test do
   gem 'simplecov'
   gem 'zonebie'
 end
+
+group :production do
+  gem 'rails_12factor'
+  gem 'puma'
+end
