@@ -7,4 +7,8 @@ class Instructor < ActiveRecord::Base
   def self.choices
     all.map { |i| [i.name, i.id] }
   end
+
+  def name
+    "#{first_name} #{last_name}".strip
+  end
 end

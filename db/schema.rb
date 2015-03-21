@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150318195942) do
+ActiveRecord::Schema.define(version: 20150321195247) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,10 +36,19 @@ ActiveRecord::Schema.define(version: 20150318195942) do
 
   create_table "instructors", force: :cascade do |t|
     t.integer "user_id"
-    t.string  "name",             null: false
+    t.string  "first_name",       null: false
+    t.string  "last_name",        null: false
     t.string  "email",            null: false
     t.integer "active_course_id"
   end
+
+  create_table "students", force: :cascade do |t|
+    t.integer  "course_id"
+    t.string   "github_username"
+    t.string   "github_id",       null: false
+  end
+
+  add_index "students", ["course_id"], name: "index_students_on_course_id", using: :btree
 
   create_table "timelines", force: :cascade do |t|
     t.integer "topic_id"
@@ -69,6 +78,8 @@ ActiveRecord::Schema.define(version: 20150318195942) do
     t.text     "google_auth_data"
     t.string   "name",                                   null: false
     t.boolean  "admin",                  default: false, null: false
+    t.string   "github_auth_id"
+    t.text     "github_auth_data"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -78,4 +89,5 @@ ActiveRecord::Schema.define(version: 20150318195942) do
   add_foreign_key "courses", "instructors"
   add_foreign_key "courses", "timelines"
   add_foreign_key "courses", "topics"
+  add_foreign_key "students", "courses"
 end

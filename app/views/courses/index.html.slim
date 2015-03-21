@@ -5,6 +5,7 @@ table.table.table-striped.table-hover
       th Topic
       th Session
       th Instructor
+      th
   tbody
     - @courses.each do |c|
       tr
@@ -12,6 +13,9 @@ table.table.table-striped.table-hover
         td= c.topic.title
         td= link_to short_date(c.start_on), c
         td= c.instructor.name
+        td
+          - if policy(c).edit?
+            = link_to "Edit", edit_course_path(c), class: "btn btn-default"
 
 - if policy(Course).create?
   = link_to "Add Course", new_course_path, class: "btn btn-default"

@@ -1,0 +1,9 @@
+h2 Details
+/ TODO: extract form partial w/ new
+= bootstrap_form_for @course do |f|
+  = f.select :topic_id, Topic.choices, {}, class: "form-control"
+  = f.select :campus_id, Campus.choices, {}, class: "form-control"
+  = f.select :instructor_id, Instructor.choices, {}, class: "form-control"
+  = f.text_field :start_on, class: "form-control"
+
+  = f.submit

@@ -1,0 +1,5 @@
+h1= @user.email
+- if @user.github_authorized?
+  | Github authorized
+- else
+  = link_to "Authorize with Github", user_omniauth_authorize_path(provider: :github)

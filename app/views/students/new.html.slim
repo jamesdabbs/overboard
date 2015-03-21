@@ -1,0 +1,6 @@
+h1
+  | New Students 
+  small for #{@course.name}
+= form_tag course_students_path
+  = select "team", "id", current_user.github_team_choices, {}, class: "form-control"
+  button.btn.btn-primary Import Team as Students

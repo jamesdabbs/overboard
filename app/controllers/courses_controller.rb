@@ -17,9 +17,24 @@ class CoursesController < ApplicationController
     @course = Course.new create_params
     authorize @course
     if @course.save
-      redirect_to @course, success: "Course saved!"
+      redirect_to @course, success: "Course saved"
     else
       render :new
+    end
+  end
+
+  def edit
+    @course = Course.find params[:id]
+    authorize @course
+  end
+
+  def update
+    @course = Course.find params[:id]
+    authorize @course
+    if @course.update update_params
+      redirect_to @course, success: "Course updated"
+    else
+      render :edit
     end
   end
 

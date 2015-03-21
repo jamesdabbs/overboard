@@ -21,8 +21,15 @@ html lang="en"
 
 
   body
-    = nav_bar brand: "TIY", responsive: true
+    = nav_bar brand: "TIY", responsive: true do
+      = menu_group pull: :right do
+        - if current_user
+          = menu_item current_user.email, profile_path
+          = menu_item "Log out", destroy_user_session_path, method: :delete
+        - else
+          = menu_item "Log in", new_user_session_path
 
     .container-fluid
       = bootstrap_flash
+
       = yield

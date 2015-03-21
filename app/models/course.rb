@@ -5,6 +5,8 @@ class Course < ActiveRecord::Base
 
   belongs_to :timeline
 
+  has_many :students
+
   validates :start_on, presence: true, uniqueness: { scope: [:topic, :campus] }
 
   serialize :data, JSON
@@ -40,5 +42,17 @@ class Course < ActiveRecord::Base
   def filename
     # FIXME!
     "dc.rb"
+  end
+
+  def name
+    "#{topic.title} / #{start_on.strftime '%b %y'}"
+  end
+
+  def import_students octoclient, team
+    octoclient.team_members(team).map do |m|
+      students.where(github_id: m.id).first_or_create! do |s|
+        s.github_username = m.login
+      end
+    end
   end
 end

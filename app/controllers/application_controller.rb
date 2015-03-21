@@ -10,6 +10,12 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
+  rescue_from User::GithubNotAuthorizedError do |e|
+    flash[:alert] = e.message.present? ? e.message : "You must authorize with Github"
+    session[OmniauthCallbacksController::GH_RETURN] = request.path
+    redirect_to profile_path
+  end
+
   private
 
   def user_not_authorized
