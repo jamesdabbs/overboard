@@ -1,6 +1,6 @@
-class Instructor < ActiveRecord::Base
+class Employee < ActiveRecord::Base
   belongs_to :user
-  belongs_to :active_course, class_name: "Course"
+  has_many :journals, foreign_key: :author_id
 
   validates :email, presence: true, uniqueness: true
 

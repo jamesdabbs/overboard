@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   serialize :google_auth_data, JSON
   serialize :github_auth_data, JSON
 
-  has_one :instructor
+  has_one :employee
   has_many :courses
 
   def self.from_omniauth auth
@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
       u.google_auth_id   = auth.id
       u.google_auth_data = auth.to_h
     end.tap do |u|
-      Instructor.where(email: u.email, user_id: nil).update_all user_id: u.id
+      Employee.where(email: u.email, user_id: nil).update_all user_id: u.id
     end
   end
 

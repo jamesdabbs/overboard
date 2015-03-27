@@ -4,4 +4,8 @@ class Campus < ActiveRecord::Base
   def self.choices
     all.map { |c| [c.name, c.id] }
   end
+
+  def names
+    [name] + (aliases || [])
+  end
 end

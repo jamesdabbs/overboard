@@ -9,13 +9,7 @@ class Course < ActiveRecord::Base
 
   validates :start_on, presence: true, uniqueness: { scope: [:topic, :campus] }
 
-  serialize :data, JSON
-
   after_initialize { self.data ||= {} }
-
-  def data
-    super.try :with_indifferent_access
-  end
 
   def get *keys
     keys.reduce(data) { |h,k| h[k.to_s] }

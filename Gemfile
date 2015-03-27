@@ -32,6 +32,8 @@ gem 'twitter-bootstrap-rails'
 gem 'bootstrap_forms'
 gem 'bootstrap-datepicker-rails'
 
+gem 'httparty'
+
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller'

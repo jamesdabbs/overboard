@@ -11,13 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321195247) do
+ActiveRecord::Schema.define(version: 20150327140055) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "campuses", force: :cascade do |t|
     t.string "name", null: false
+    t.json   "aliases"
   end
 
   create_table "courses", force: :cascade do |t|
@@ -25,7 +26,7 @@ ActiveRecord::Schema.define(version: 20150321195247) do
     t.integer "topic_id",      null: false
     t.integer "campus_id",     null: false
     t.date    "start_on",      null: false
-    t.text    "data"
+    t.json    "data"
     t.integer "timeline_id"
   end
 
@@ -34,18 +35,27 @@ ActiveRecord::Schema.define(version: 20150321195247) do
   add_index "courses", ["timeline_id"], name: "index_courses_on_timeline_id", using: :btree
   add_index "courses", ["topic_id"], name: "index_courses_on_topic_id", using: :btree
 
-  create_table "instructors", force: :cascade do |t|
+  create_table "employees", force: :cascade do |t|
     t.integer "user_id"
-    t.string  "first_name",       null: false
-    t.string  "last_name",        null: false
-    t.string  "email",            null: false
-    t.integer "active_course_id"
+    t.string  "first_name",  null: false
+    t.string  "last_name",   null: false
+    t.string  "email",       null: false
+    t.string  "teamwork_id"
+  end
+
+  create_table "journals", force: :cascade do |t|
+    t.string   "teamwork_id"
+    t.integer  "author_id"
+    t.string   "title"
+    t.text     "body"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "students", force: :cascade do |t|
-    t.integer  "course_id"
-    t.string   "github_username"
-    t.string   "github_id",       null: false
+    t.integer "course_id"
+    t.string  "github_username"
+    t.string  "github_id",       null: false
   end
 
   add_index "students", ["course_id"], name: "index_students_on_course_id", using: :btree
@@ -59,6 +69,7 @@ ActiveRecord::Schema.define(version: 20150321195247) do
 
   create_table "topics", force: :cascade do |t|
     t.string "title", null: false
+    t.json   "aliases"
   end
 
   create_table "users", force: :cascade do |t|
@@ -86,8 +97,9 @@ ActiveRecord::Schema.define(version: 20150321195247) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "courses", "campuses"
-  add_foreign_key "courses", "instructors"
+  add_foreign_key "courses", "employees", column: "instructor_id"
   add_foreign_key "courses", "timelines"
   add_foreign_key "courses", "topics"
+  add_foreign_key "journals", "employees", column: "author_id"
   add_foreign_key "students", "courses"
 end

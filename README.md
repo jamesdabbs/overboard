@@ -1,4 +1,4 @@
-# Overboard
+# Ferrite
 
 Way-too-detailed journal tracking tool
 
