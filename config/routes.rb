@@ -13,5 +13,9 @@ Rails.application.routes.draw do
 
   resource :profile, only: [:show]
 
+  scope :teamwork do
+    resources :journals, only: [:index]
+  end
+
   root 'courses#index'
 end

@@ -1,5 +1,15 @@
 h1= @user.email
 - if @user.github_authorized?
-  | Github authorized
+  .btn.btn-success Github Authorized
 - else
-  = link_to "Authorize with Github", user_omniauth_authorize_path(provider: :github)
+  = link_to "Authorize with Github", user_omniauth_authorize_path(provider: :github), class: "btn btn-primary"
+
+- if @user.journals
+  table.table.table-striped
+    thead
+      tr
+        th Title
+    tbody
+      - @user.journals.each do |j|
+        tr
+          td= j.title

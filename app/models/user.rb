@@ -70,4 +70,8 @@ class User < ActiveRecord::Base
       teams.map { |team| ["#{org.login}/#{team.slug}", team.id] }
     end
   end
+
+  def journals
+    employee.try :journals
+  end
 end

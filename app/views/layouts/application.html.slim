@@ -18,8 +18,6 @@ html lang="en"
     = favicon_link_tag 'favicon.ico', :rel => 'shortcut icon'
     = javascript_include_tag "application"
 
-
-
   body
     = nav_bar brand: "TIY", responsive: true do
       = menu_group pull: :right do
@@ -29,7 +27,7 @@ html lang="en"
         - else
           = menu_item "Log in", new_user_session_path
 
-    .container-fluid
+    div class="#{@fluid ? "container-fluid" : "container"}"
       = bootstrap_flash
 
       = yield

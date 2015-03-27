@@ -38,9 +38,10 @@ private
 
     def sync_journal! journal
       Journal.where(teamwork_id: journal["id"]).first_or_create! do |r|
-        r.author_id = author_map[journal["author-id"]]
-        r.title     = journal["title"]
-        r.body      = journal["body"]
+        r.created_at = DateTime.parse journal["posted-on"]
+        r.author_id  = author_map[journal["author-id"]]
+        r.title      = journal["title"]
+        r.body       = journal["body"]
       end
     rescue => e
       warn "Failed to sync '#{journal['title']}' - #{e}"
