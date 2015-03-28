@@ -1,6 +1,17 @@
 class Importer
-  def initialize course, notes_dir
-    @course, @notes_dir = course, notes_dir
+  def initialize notes_dir
+    @notes_dir = notes_dir
+
+    dc    = Campus.where(name: "Washington, D.C.").first!
+    ruby  = Topic.where(title: "Rails Engineering").first!
+    james = Employee.where(email: "james@theironyard.com").first!
+
+    @course = Course.where(
+      campus: dc,
+      topic: ruby,
+      instructor: james,
+      start_on: Date.parse("Jan 26, 2015")
+    ).first_or_create!
   end
 
   def import!

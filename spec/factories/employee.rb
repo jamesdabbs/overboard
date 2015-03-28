@@ -1,7 +1,8 @@
 FactoryGirl.define do
-  factory :instructor do
+  factory :employee do
     sequence(:email) { |n| "user#{n}@example.com" }
-    name { Faker::Name.name }
+    first_name { Faker::Name.name }
+    last_name { Faker::Name.name }
 
     trait :with_account do
       user

@@ -34,12 +34,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def active_course
-    instructor.try :active_course
-  end
-
   def instructs? course
-    course.instructor.user_id == id
+    course.instructor.user == self
   end
 
   def github_authorized?

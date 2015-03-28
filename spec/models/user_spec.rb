@@ -21,11 +21,11 @@ describe User do
       expect(user.google_auth_data["extra"]["favorite_movie"]).to eq "Alien"
     end
 
-    it "claims existing instructor roles by email" do
-      instructor = create :instructor, email: auth.info.email
+    it "claims existing employee roles by email" do
+      employee = create :employee, email: auth.info.email
       user = User.from_omniauth auth
-      instructor.reload
-      expect(instructor.user).to eq user
+      employee.reload
+      expect(employee.user).to eq user
     end
 
     it "can lookup from omniauth data" do
@@ -40,17 +40,5 @@ describe User do
         User.from_omniauth auth(info: { email: "jamesdabbs@gmail.com" })
       end.to raise_error
     end
-  end
-
-  it "may have an active course" do
-    course     = create :course
-    instructor = create :instructor, :with_account, active_course: course
-    expect(instructor.user.active_course).to eq course
-  end
-
-  it "may not have an active course" do
-    instructor = create :instructor, :with_account
-    expect(instructor.user).not_to eq nil
-    expect(instructor.user.active_course).to eq nil
   end
 end

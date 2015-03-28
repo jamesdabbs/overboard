@@ -29,13 +29,7 @@ class Courses < Thor
   desc 'import', 'import course notes from a folder'
   def import path
     require ::Rails.root.join("lib", "importer")
-    # FIXME: ask for Course
-    course    = Course.find 9
     full_path = ::Rails.root.join(path)
-    Importer.new(course, full_path).import!
-  end
-
-  desc 'teamwork', 'import journals from Teamwork'
-  def teamwork
+    Importer.new(full_path).import!
   end
 end
